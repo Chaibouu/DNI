@@ -64,15 +64,32 @@ export async function POST(req: NextRequest) {
 
     // Récupérer l'utilisateur
     const user = await db.user.findUnique({ where: { id: userId } });
-    if (!user || !user.password) {
+    if (!user) {
       return NextResponse.json(
         { error: "Utilisateur introuvable" },
         { status: 404 }
       );
     }
 
+    // Vérifier que l'utilisateur a un mot de passe
+    if (!user.password || typeof user.password !== "string") {
+      return NextResponse.json(
+        { error: "Aucun mot de passe défini pour cet utilisateur" },
+        { status: 400 }
+      );
+    }
+
     // Vérifier l'ancien mot de passe
-    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    let isPasswordValid: boolean;
+    try {
+      isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    } catch (error) {
+      console.error("Erreur lors de la comparaison du mot de passe:", error);
+      return NextResponse.json(
+        { error: "Erreur lors de la vérification du mot de passe" },
+        { status: 500 }
+      );
+    }
     if (!isPasswordValid) {
       return NextResponse.json(
         { error: "L'ancien mot de passe est incorrect" },
@@ -81,7 +98,16 @@ export async function POST(req: NextRequest) {
     }
 
     // Hasher le nouveau mot de passe
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    let hashedPassword: string;
+    try {
+      hashedPassword = await bcrypt.hash(newPassword, 10);
+    } catch (error) {
+      console.error("Erreur lors du hachage du mot de passe:", error);
+      return NextResponse.json(
+        { error: "Erreur lors du hachage du mot de passe" },
+        { status: 500 }
+      );
+    }
 
     // Mettre à jour le mot de passe
     await db.user.update({

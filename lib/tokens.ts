@@ -6,10 +6,21 @@ import { getPasswordResetTokenByEmail } from "@/data/password-reset-token";
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
 import { JwtPayload, TokenExpiredError } from "jsonwebtoken"; // Type du payload JWT
 import { verify, sign } from "jsonwebtoken";
-const privateKey = process.env.RSA_PRIVATE_KEY as string;
-const publicKey = process.env.RSA_PUBLIC_KEY as string;
-const aesSecretKey = Buffer.from(process.env.AES_SECRET_KEY as string, "hex");
-const ALGORITHM = "RS256"; // Algorithme pour signer le JWTimport crypto
+// Vérifier que les variables d'environnement sont définies
+if (!process.env.RSA_PRIVATE_KEY) {
+  throw new Error("RSA_PRIVATE_KEY n'est pas défini dans les variables d'environnement");
+}
+if (!process.env.RSA_PUBLIC_KEY) {
+  throw new Error("RSA_PUBLIC_KEY n'est pas défini dans les variables d'environnement");
+}
+if (!process.env.AES_SECRET_KEY) {
+  throw new Error("AES_SECRET_KEY n'est pas défini dans les variables d'environnement");
+}
+
+const privateKey = process.env.RSA_PRIVATE_KEY;
+const publicKey = process.env.RSA_PUBLIC_KEY;
+const aesSecretKey = Buffer.from(process.env.AES_SECRET_KEY, "hex");
+const ALGORITHM = "RS256"; // Algorithme pour signer le JWT
 
 export const generateTwoFactorToken = async (email: string) => {
   const token = crypto.randomInt(100_000, 1_000_000).toString();
@@ -255,13 +266,36 @@ export const createEncryptedJWT = (payload: object, expiresIn: string) => {
 
 // Vérifier et déchiffrer un JWT chiffré
 export const verifyEncryptedJWT = (encryptedToken: string) => {
+  // Valider que le token est défini et non vide
+  if (!encryptedToken || typeof encryptedToken !== "string") {
+    throw new Error("Token invalide ou manquant");
+  }
+
   // Séparer les différentes parties du token chiffré (IV, authTag, encryptedToken)
-  const [ivBase64, authTagBase64, encryptedBase64] = encryptedToken.split(".");
+  const parts = encryptedToken.split(".");
+  if (parts.length !== 3) {
+    throw new Error("Format de token invalide");
+  }
+
+  const [ivBase64, authTagBase64, encryptedBase64] = parts;
+
+  // Valider que toutes les parties sont présentes
+  if (!ivBase64 || !authTagBase64 || !encryptedBase64) {
+    throw new Error("Token incomplet");
+  }
 
   // Convertir en Buffer
-  const iv = Buffer.from(ivBase64, "base64");
-  const authTag = Buffer.from(authTagBase64, "base64");
-  const encrypted = Buffer.from(encryptedBase64, "base64");
+  let iv: Buffer;
+  let authTag: Buffer;
+  let encrypted: Buffer;
+  
+  try {
+    iv = Buffer.from(ivBase64, "base64");
+    authTag = Buffer.from(authTagBase64, "base64");
+    encrypted = Buffer.from(encryptedBase64, "base64");
+  } catch (error) {
+    throw new Error("Erreur lors de la conversion du token en Buffer");
+  }
 
   // Déchiffrer le JWT avec AES-256-GCM
   // @ts-ignore: Unreachable code error
@@ -286,19 +320,27 @@ export const verifyEncryptedJWT = (encryptedToken: string) => {
 
 // Fonction pour récupérer l'ID utilisateur à partir du token JWT chiffré
 export async function getUserIdFromToken(
-  token: string
+  token: string | undefined | null
 ): Promise<string | null> {
   try {
+    // Valider que le token est défini et non vide
+    if (!token || typeof token !== "string" || token.trim() === "") {
+      return null;
+    }
+
     // Déchiffrer et vérifier le JWT chiffré pour obtenir le payload
     const decodedToken = verifyEncryptedJWT(token);
 
     // Vérifier que le payload est bien de type JwtPayload et contient l'ID utilisateur
     if (
       typeof decodedToken === "object" &&
+      decodedToken !== null &&
       (decodedToken as JwtPayload).userId
     ) {
-      const userId = (decodedToken as JwtPayload).userId as string;
-      return userId;
+      const userId = (decodedToken as JwtPayload).userId;
+      if (typeof userId === "string" && userId.trim() !== "") {
+        return userId;
+      }
     }
     // Si le token n'a pas d'ID utilisateur, retourner null
     return null;
