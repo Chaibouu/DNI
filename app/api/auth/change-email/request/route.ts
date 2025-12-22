@@ -6,6 +6,9 @@ import {
 } from "@/lib/tokens";
 import { sendChangeEmailVerification } from "@/lib/mail";
 
+// Forcer le rendu dynamique
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const { newEmail } = await req.json();
