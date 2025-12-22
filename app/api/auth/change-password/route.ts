@@ -3,12 +3,26 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserIdFromToken } from "@/lib/tokens";
 
+// Forcer le rendu dynamique
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
-    const { oldPassword, newPassword } = await req.json();
-    const authHeader = req.headers.get("Authorization");
+    // Valider et parser le body
+    let body;
+    try {
+      body = await req.json();
+    } catch (error) {
+      return NextResponse.json(
+        { error: "Corps de la requête invalide" },
+        { status: 400 }
+      );
+    }
+
+    const { oldPassword, newPassword } = body ?? {};
 
     // Vérifier si l'utilisateur est authentifié
+    const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
       return NextResponse.json(
         { error: "Authentification requise" },
@@ -18,6 +32,13 @@ export async function POST(req: NextRequest) {
 
     // Extraire le token et obtenir l'ID utilisateur
     const token = authHeader.split(" ")[1];
+    if (!token) {
+      return NextResponse.json(
+        { error: "Token manquant" },
+        { status: 401 }
+      );
+    }
+
     const userId = await getUserIdFromToken(token);
     if (!userId) {
       return NextResponse.json(
@@ -26,10 +47,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Vérifier les données
-    if (!oldPassword || !newPassword) {
+    // Vérifier les données avec validation de type stricte
+    if (!oldPassword || typeof oldPassword !== "string") {
       return NextResponse.json(
-        { error: "L'ancien et le nouveau mot de passe sont requis" },
+        { error: "L'ancien mot de passe est requis et doit être une chaîne" },
+        { status: 400 }
+      );
+    }
+
+    if (!newPassword || typeof newPassword !== "string") {
+      return NextResponse.json(
+        { error: "Le nouveau mot de passe est requis et doit être une chaîne" },
         { status: 400 }
       );
     }
