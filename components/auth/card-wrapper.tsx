@@ -14,16 +14,16 @@ import Image from "next/image";
 interface CardWrapperProps {
   children: React.ReactNode;
   headerLabel: string;
-  backButtonLabel: string;
-  backButtonHref: string;
+  // backButtonLabel: string;
+  // backButtonHref: string;
   showSocial?: boolean;
 };
 
 export const CardWrapper = ({
   children,
   headerLabel,
-  backButtonLabel,
-  backButtonHref,
+  // backButtonLabel,
+  // backButtonHref,
   showSocial
 }: CardWrapperProps) => {
   return (
@@ -56,10 +56,10 @@ export const CardWrapper = ({
         </CardFooter>
       )}
       <CardFooter>
-        <BackButton
+        {/* <BackButton
           label={backButtonLabel}
           href={backButtonHref}
-        />
+        /> */}
       </CardFooter>
     </Card>
   );
