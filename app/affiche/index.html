@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur d'Affiche - La Grande Rencontre - DNI - Dialogue National Intergénérationnel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0D7702;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .campaign-badge {
+            display: inline-block;
+            background: #F13D06;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px dashed #0D7702;
+        }
+
+        .upload-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 15px;
+            background: #0D7702;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .file-input-label:hover {
+            background: #0a5d01;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 119, 2, 0.4);
+        }
+
+        input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            margin-top: 15px;
+        }
+
+        .canvas-container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .canvas-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        #canvas {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: #0D7702;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 119, 2, 0.4);
+        }
+
+        .btn-success {
+            background: #F13D06;
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(241, 61, 6, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .instructions {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #0D7702;
+        }
+
+        .instructions h3 {
+            color: #0D7702;
+            margin-bottom: 10px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #0D7702;
+            font-weight: bold;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .adjust-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px dashed #0D7702;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .adjust-section.active {
+            display: block;
+        }
+
+        .adjust-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .adjust-preview-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #0D7702;
+            cursor: move;
+            background: #fff;
+        }
+
+        .adjust-preview-container canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .adjust-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .adjust-controls label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .adjust-controls input[type="range"] {
+            width: 200px;
+            margin: 0 10px;
+        }
+
+        .btn-adjust {
+            background: #0D7702;
+            color: white;
+        }
+
+        .btn-adjust:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(241, 61, 6, 0.4);
+        }
+
+        .btn-secondary {
+            background: #F13D06;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #cc3205;
+            transform: translateY(-2px);
+        }
+
+        .footer-signature {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #a1a0a0;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-signature .signature {
+            font-weight: bold;
+            color: #bfc0c9;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .adjust-preview-container {
+                width: 250px;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dialogue National Intergénérationnel</h1>
+        <div class="campaign-badge">Campagne "J'y serai" - La Grande Rencontre - DNI - Dialogue National Intergénérationnel 2025</div>
+        <p class="subtitle">Créez votre affiche personnalisée en quelques clics !</p>
+
+        <div class="instructions">
+            <h3>📋 Instructions :</h3>
+            <ol>
+                <li>Téléchargez votre photo (format JPG, PNG recommandé)</li>
+                <li>Cliquez sur "Générer l'affiche" pour créer votre affiche personnalisée</li>
+                <li>Ajustez si nécessaire et téléchargez votre affiche finale</li>
+            </ol>
+        </div>
+
+        <div class="main-content">
+            <div class="upload-section">
+                <h2>📸 Votre Photo</h2>
+                <div class="file-input-wrapper">
+                    <label for="userImage" class="file-input-label">
+                        📁 Choisir une photo
+                    </label>
+                    <input type="file" id="userImage" accept="image/*">
+                </div>
+                <div id="previewContainer">
+                    <img id="previewImage" alt="Aperçu de votre photo">
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="btn btn-adjust" id="adjustBtn" style="display: none;">⚙️ Ajuster la photo dans le cercle</button>
+                </div>
+            </div>
+
+            <div class="adjust-section" id="adjustSection">
+                <h3>🎯 Ajustement de la photo</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 15px;">
+                    Déplacez la photo avec la souris et ajustez le zoom pour un meilleur cadrage
+                </p>
+                <div class="adjust-preview-container" id="adjustPreviewContainer">
+                    <canvas id="adjustPreviewCanvas"></canvas>
+                </div>
+                <div class="adjust-controls">
+                    <label>Zoom:</label>
+                    <input type="range" id="zoomSlider" min="0.5" max="2" step="0.1" value="1">
+                    <span id="zoomValue">100%</span>
+                </div>
+                <div class="adjust-controls" style="margin-top: 15px;">
+                    <label style="width: 100%; text-align: center; margin-bottom: 10px;">Déplacer la photo:</label>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 200px; margin: 0 auto;">
+                        <div></div>
+                        <button class="btn btn-secondary" id="moveUpBtn" style="padding: 10px;">↑</button>
+                        <div></div>
+                        <button class="btn btn-secondary" id="moveLeftBtn" style="padding: 10px;">←</button>
+                        <button class="btn btn-secondary" id="resetAdjustBtn" style="padding: 10px;">↺</button>
+                        <button class="btn btn-secondary" id="moveRightBtn" style="padding: 10px;">→</button>
+                        <div></div>
+                        <button class="btn btn-secondary" id="moveDownBtn" style="padding: 10px;">↓</button>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="canvas-container">
+            <h2>✨ Votre Affiche Personnalisée</h2>
+            <div class="loading" id="loading">Chargement en cours...</div>
+            <canvas id="canvas"></canvas>
+            <div class="controls">
+                <button class="btn btn-primary" id="generateBtn" disabled>Générer l'affiche</button>
+                <button class="btn btn-success" id="downloadBtn" disabled>Télécharger l'affiche</button>
+            </div>
+        </div>
+
+        <div class="footer-signature">
+            Développé par <span class="signature">Chaibouu</span>
+        </div>
+    </div>
+
+    <script>
+        const userImageInput = document.getElementById('userImage');
+        const previewImage = document.getElementById('previewImage');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const generateBtn = document.getElementById('generateBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const loading = document.getElementById('loading');
+
+        let userImage = null;
+        let posterImage = null;
+        let badgeImage = null;
+        let isPosterLoaded = false;
+        let isBadgeLoaded = false;
+        
+        // Paramètres d'ajustement de la photo
+        let photoAdjustment = {
+            offsetX: 0,
+            offsetY: 0,
+            scale: 1
+        };
+        
+        let isAdjusting = false;
+        let adjustStartX = 0;
+        let adjustStartY = 0;
+        const adjustPreviewCanvas = document.getElementById('adjustPreviewCanvas');
+        const adjustPreviewCtx = adjustPreviewCanvas.getContext('2d');
+        const adjustSection = document.getElementById('adjustSection');
+        const adjustBtn = document.getElementById('adjustBtn');
+        const zoomSlider = document.getElementById('zoomSlider');
+        const zoomValue = document.getElementById('zoomValue');
+        const resetAdjustBtn = document.getElementById('resetAdjustBtn');
+        const adjustPreviewContainer = document.getElementById('adjustPreviewContainer');
+
+        // Fonction pour vérifier que la police Arizonia est chargée
+        async function ensureFontLoaded() {
+            if ('fonts' in document) {
+                try {
+                    await document.fonts.load('1em "Arizonia"');
+                    await document.fonts.ready;
+                } catch (e) {
+                    console.warn('Erreur lors du chargement de la police Arizonia:', e);
+                }
+            }
+        }
+
+        // Charger l'image de l'affiche
+        const posterImg = new Image();
+        posterImg.crossOrigin = 'anonymous';
+        posterImg.onload = function() {
+            posterImage = this;
+            isPosterLoaded = true;
+            canvas.width = this.width;
+            canvas.height = this.height;
+            checkReady();
+        };
+        posterImg.onerror = function() {
+            alert('Erreur lors du chargement de l\'affiche. Assurez-vous que le fichier affiche.jpg existe.');
+        };
+        // posterImg.src = 'affiche.jpg';
+        posterImg.src = 'affiche.png';
+
+        // Charger l'image du badge
+        const badgeImg = new Image();
+        badgeImg.crossOrigin = 'anonymous';
+        badgeImg.onload = function() {
+            badgeImage = this;
+            isBadgeLoaded = true;
+        };
+        badgeImg.onerror = function() {
+            console.warn('Le badge n\'a pas pu être chargé. L\'affiche sera générée sans badge.');
+            isBadgeLoaded = true; // Permettre la génération même sans badge
+        };
+        badgeImg.src = 'badge.png';
+
+        // Gérer l'upload de l'image utilisateur
+        userImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    userImage = new Image();
+                    userImage.onload = function() {
+                        previewImage.src = event.target.result;
+                        previewImage.style.display = 'block';
+                        generateBtn.disabled = false;
+                        adjustBtn.style.display = 'inline-block';
+                        // Réinitialiser les ajustements
+                        photoAdjustment = { offsetX: 0, offsetY: 0, scale: 1 };
+                        zoomSlider.value = 1;
+                        zoomValue.textContent = '100%';
+                        updateAdjustPreview();
+                    };
+                    userImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function checkReady() {
+            if (isPosterLoaded && userImage) {
+                generateBtn.disabled = false;
+            }
+        }
+
+        // Générer l'affiche
+        generateBtn.addEventListener('click', async function() {
+            if (!posterImage || !userImage) {
+                alert('Veuillez d\'abord charger votre photo.');
+                return;
+            }
+
+            loading.classList.add('active');
+            
+            // Attendre que la police soit chargée
+            await ensureFontLoaded();
+            
+            // Dessiner l'affiche de base
+            ctx.drawImage(posterImage, 0, 0);
+
+            // Calculer la position et la taille du cercle pour la photo utilisateur
+            // Le cercle est centré sur l'affiche
+            const centerX = canvas.width * 0.5; // Centre horizontal
+            const centerY = canvas.height * 0.59; // Centre vertical
+            const radius = canvas.width * 0.21; // Rayon du cercle (ajustable)
+
+            // Créer un masque circulaire pour cacher complètement la photo existante
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.clip();
+
+            // Remplir d'abord le cercle avec une couleur de fond (blanc) pour cacher l'image originale
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            // Calculer les dimensions pour remplir complètement le cercle
+            const aspectRatio = userImage.width / userImage.height;
+            let drawWidth, drawHeight;
+
+            // Utiliser cover pour remplir tout le cercle et cacher l'image originale
+            if (aspectRatio > 1) {
+                // Image plus large que haute - on utilise la hauteur comme référence
+                drawHeight = radius * 2 * 1.1; // Légèrement plus grand pour couvrir complètement
+                drawWidth = drawHeight * aspectRatio;
+            } else {
+                // Image plus haute que large - on utilise la largeur comme référence
+                drawWidth = radius * 2 * 1.1; // Légèrement plus grand pour couvrir complètement
+                drawHeight = drawWidth / aspectRatio;
+            }
+
+            // Appliquer les ajustements (scale et offset)
+            const adjustedWidth = drawWidth * photoAdjustment.scale;
+            const adjustedHeight = drawHeight * photoAdjustment.scale;
+            
+            // Convertir les offsets proportionnellement (aperçu = 150px de rayon, réel = radius)
+            const previewRadius = 150; // Rayon de l'aperçu d'ajustement
+            const scaleRatio = radius / previewRadius;
+            const scaledOffsetX = photoAdjustment.offsetX * scaleRatio;
+            const scaledOffsetY = photoAdjustment.offsetY * scaleRatio;
+            
+            // Centrer l'image dans le cercle avec les ajustements
+            const x = centerX - adjustedWidth / 2 + scaledOffsetX;
+            const y = centerY - adjustedHeight / 2 + scaledOffsetY;
+
+            // Dessiner l'image utilisateur pour remplacer complètement la photo existante
+            ctx.drawImage(userImage, x, y, adjustedWidth, adjustedHeight);
+            ctx.restore();
+
+            // Dessiner le badge en haut à droite de la photo
+            if (badgeImage && isBadgeLoaded) {
+                // Calculer la taille du badge (proportionnelle au cercle) - augmentée
+                const badgeSize = radius * 0.6; // 70% du rayon du cercle (augmenté)
+                
+                // Positionner le badge en haut à droite du cercle
+                // X : à droite du cercle, légèrement décalé vers la gauche
+                const badgeX = centerX + radius * 0.43;
+                // Y : en haut du cercle, un peu plus haut
+                const badgeY = centerY - radius * 1.02;
+                
+                // Calculer le centre du cercle pour le badge
+                const badgeCenterX = badgeX + badgeSize / 2;
+                const badgeCenterY = badgeY + badgeSize / 2;
+                const badgeRadius = badgeSize / 2;
+                
+                // Créer un masque circulaire pour rendre le badge rond
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(badgeCenterX, badgeCenterY, badgeRadius, 0, Math.PI * 2);
+                ctx.clip();
+                
+                // Dessiner le badge dans le cercle
+                ctx.drawImage(badgeImage, badgeX, badgeY, badgeSize, badgeSize);
+                ctx.restore();
+            }
+
+            // Dessiner le texte "J'y serai" en dessous de la photo
+            ctx.save();
+            
+            ctx.font = (canvas.width * 0.1) + 'px "Arizonia", cursive';
+            ctx.fillStyle = '#F13D06';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            const textY = centerY + radius + (canvas.height * 0.05); // Position en dessous du cercle avec un espace
+            ctx.fillText("J'y serai", centerX, textY);
+            ctx.restore();
+
+            loading.classList.remove('active');
+            downloadBtn.disabled = false;
+        });
+
+        // Télécharger l'affiche
+        downloadBtn.addEventListener('click', function() {
+            if (!canvas.width || !canvas.height) {
+                alert('Veuillez d\'abord générer l\'affiche.');
+                return;
+            }
+
+            // Créer un lien de téléchargement
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'affiche-personnalisee-jy-serai.jpg';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/jpeg', 0.95);
+        });
+
+        // Fonction pour mettre à jour l'aperçu d'ajustement
+        function updateAdjustPreview() {
+            if (!userImage) return;
+            
+            const size = 300;
+            adjustPreviewCanvas.width = size;
+            adjustPreviewCanvas.height = size;
+            
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const radius = size / 2;
+            
+            // Créer un masque circulaire
+            adjustPreviewCtx.save();
+            adjustPreviewCtx.beginPath();
+            adjustPreviewCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            adjustPreviewCtx.clip();
+            
+            // Remplir le fond
+            adjustPreviewCtx.fillStyle = '#ffffff';
+            adjustPreviewCtx.fill();
+            
+            // Calculer les dimensions de l'image
+            const aspectRatio = userImage.width / userImage.height;
+            let drawWidth, drawHeight;
+            
+            if (aspectRatio > 1) {
+                drawHeight = radius * 2 * 1.1 * photoAdjustment.scale;
+                drawWidth = drawHeight * aspectRatio;
+            } else {
+                drawWidth = radius * 2 * 1.1 * photoAdjustment.scale;
+                drawHeight = drawWidth / aspectRatio;
+            }
+            
+            // Appliquer les offsets
+            const x = centerX - drawWidth / 2 + photoAdjustment.offsetX;
+            const y = centerY - drawHeight / 2 + photoAdjustment.offsetY;
+            
+            // Dessiner l'image
+            adjustPreviewCtx.drawImage(userImage, x, y, drawWidth, drawHeight);
+            adjustPreviewCtx.restore();
+        }
+
+        // Activer/désactiver le mode ajustement
+        adjustBtn.addEventListener('click', function() {
+            if (adjustSection.classList.contains('active')) {
+                adjustSection.classList.remove('active');
+                adjustBtn.textContent = '⚙️ Ajuster la photo dans le cercle';
+            } else {
+                adjustSection.classList.add('active');
+                adjustBtn.textContent = '✖️ Fermer l\'ajustement';
+                updateAdjustPreview();
+            }
+        });
+
+        // Gérer le zoom avec le slider
+        zoomSlider.addEventListener('input', function() {
+            photoAdjustment.scale = parseFloat(this.value);
+            zoomValue.textContent = Math.round(photoAdjustment.scale * 100) + '%';
+            updateAdjustPreview();
+        });
+
+        // Fonction pour déplacer la photo
+        function movePhoto(deltaX, deltaY) {
+            photoAdjustment.offsetX += deltaX;
+            photoAdjustment.offsetY += deltaY;
+            updateAdjustPreview();
+        }
+
+        // Gérer le déplacement avec la souris (amélioré avec coordonnées relatives)
+        adjustPreviewContainer.addEventListener('mousedown', function(e) {
+            if (!userImage) return;
+            isAdjusting = true;
+            const rect = adjustPreviewContainer.getBoundingClientRect();
+            adjustStartX = e.clientX - rect.left - photoAdjustment.offsetX;
+            adjustStartY = e.clientY - rect.top - photoAdjustment.offsetY;
+            adjustPreviewContainer.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isAdjusting) return;
+            const rect = adjustPreviewContainer.getBoundingClientRect();
+            photoAdjustment.offsetX = e.clientX - rect.left - adjustStartX;
+            photoAdjustment.offsetY = e.clientY - rect.top - adjustStartY;
+            updateAdjustPreview();
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (isAdjusting) {
+                isAdjusting = false;
+                adjustPreviewContainer.style.cursor = 'move';
+            }
+        });
+
+        // Gérer le zoom avec la molette
+        adjustPreviewContainer.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            photoAdjustment.scale = Math.max(0.5, Math.min(2, photoAdjustment.scale + delta));
+            zoomSlider.value = photoAdjustment.scale;
+            zoomValue.textContent = Math.round(photoAdjustment.scale * 100) + '%';
+            updateAdjustPreview();
+        });
+
+        // Contrôles de déplacement avec les boutons
+        const moveStep = 5; // Pas de déplacement en pixels
+        
+        document.getElementById('moveUpBtn').addEventListener('click', function() {
+            movePhoto(0, -moveStep);
+        });
+        
+        document.getElementById('moveDownBtn').addEventListener('click', function() {
+            movePhoto(0, moveStep);
+        });
+        
+        document.getElementById('moveLeftBtn').addEventListener('click', function() {
+            movePhoto(-moveStep, 0);
+        });
+        
+        document.getElementById('moveRightBtn').addEventListener('click', function() {
+            movePhoto(moveStep, 0);
+        });
+
+        // Réinitialiser les ajustements
+        resetAdjustBtn.addEventListener('click', function() {
+            photoAdjustment = { offsetX: 0, offsetY: 0, scale: 1 };
+            zoomSlider.value = 1;
+            zoomValue.textContent = '100%';
+            updateAdjustPreview();
+        });
+
+        // Gérer le touch pour mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let lastTouchDistance = 0;
+
+        adjustPreviewContainer.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 1) {
+                isAdjusting = true;
+                const rect = adjustPreviewContainer.getBoundingClientRect();
+                touchStartX = e.touches[0].clientX - rect.left - photoAdjustment.offsetX;
+                touchStartY = e.touches[0].clientY - rect.top - photoAdjustment.offsetY;
+            } else if (e.touches.length === 2) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                lastTouchDistance = Math.sqrt(dx * dx + dy * dy);
+            }
+        });
+
+        adjustPreviewContainer.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            if (e.touches.length === 1 && isAdjusting) {
+                const rect = adjustPreviewContainer.getBoundingClientRect();
+                photoAdjustment.offsetX = e.touches[0].clientX - rect.left - touchStartX;
+                photoAdjustment.offsetY = e.touches[0].clientY - rect.top - touchStartY;
+                updateAdjustPreview();
+            } else if (e.touches.length === 2) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (lastTouchDistance > 0) {
+                    const scaleChange = (distance - lastTouchDistance) / 100;
+                    photoAdjustment.scale = Math.max(0.5, Math.min(2, photoAdjustment.scale + scaleChange));
+                    zoomSlider.value = photoAdjustment.scale;
+                    zoomValue.textContent = Math.round(photoAdjustment.scale * 100) + '%';
+                    updateAdjustPreview();
+                }
+                lastTouchDistance = distance;
+            }
+        });
+
+        adjustPreviewContainer.addEventListener('touchend', function() {
+            isAdjusting = false;
+            lastTouchDistance = 0;
+        });
+    </script>
+</body>
+</html>

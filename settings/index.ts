@@ -15,7 +15,7 @@ const appConfig = {
       pass: process.env.MAIL_AUTH_PASSWORD,
     },
   },
-  publicRoutes: ["/","/dni"],
+  publicRoutes: ["/","/dni","/affiche"],
   defaultLoginRedirect: "/test",
   primaryColor: "#0D7702",
   secondaryColor: "#F13D06",
