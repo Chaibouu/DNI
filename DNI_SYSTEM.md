@@ -1,4 +1,4 @@
-# Système d'Inscription et de Gestion des Tickets DNI
+# Système de Réservation et de Gestion des Tickets DNI
 
 ## Vue d'ensemble
 
@@ -12,8 +12,8 @@ Ce système permet aux participants du Dialogue National Intergénérationnel de
 
 ### Pour les participants
 
-1. **Inscription** (`/dni/register`)
-   - Formulaire d'inscription avec validation
+1. **Réservation** (`/dni/register`)
+   - Formulaire de réservation avec validation
    - Génération automatique d'un ID unique (format: DNI-2025-XX23AB)
    - Génération automatique d'un QR Code sécurisé
    - Types d'accès disponibles : Général, VIP, Presse, Staff
@@ -103,7 +103,7 @@ Assurez-vous d'avoir configuré `DATABASE_URL` dans votre fichier `.env`.
 
 ## Utilisation
 
-### Inscription d'un participant
+### Réservation d'un participant
 
 1. Accéder à `/dni/register`
 2. Remplir le formulaire :
@@ -118,7 +118,7 @@ Assurez-vous d'avoir configuré `DATABASE_URL` dans votre fichier `.env`.
 ### Recherche d'un ticket
 
 1. Accéder à `/dni/lookup`
-2. Entrer l'adresse email utilisée lors de l'inscription
+2. Entrer l'adresse email utilisée lors de la réservation
 3. Cliquer sur "Rechercher"
 4. Redirection vers la page du ticket
 
@@ -167,8 +167,8 @@ Vérifie et valide un ticket via son QR code.
 
 - `prisma/schema.prisma` : Modèle de données
 - `lib/dni-utils.ts` : Utilitaires (génération ID, QR code)
-- `actions/dni-registration.ts` : Actions serveur pour l'inscription
-- `app/dni/register/page.tsx` : Page d'inscription
+- `actions/dni-registration.ts` : Actions serveur pour la réservation
+- `app/dni/register/page.tsx` : Page de réservation
 - `app/dni/ticket/[participantId]/page.tsx` : Page de visualisation du ticket
 - `app/(dashboard)/admin/dni-scanner/page.tsx` : Page de scan (admin)
 - `app/api/dni/verify/route.ts` : API de vérification des tickets

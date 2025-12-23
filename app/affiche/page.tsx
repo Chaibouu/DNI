@@ -152,8 +152,8 @@ export default function AffichePage() {
     ctx.drawImage(posterImage, 0, 0);
 
     const centerX = canvas.width * 0.5;
-    const centerY = canvas.height * 0.59;
-    const radius = canvas.width * 0.21;
+    const centerY = canvas.height * 0.655;
+    const radius = canvas.width * 0.15;
 
     ctx.save();
     ctx.beginPath();
@@ -206,14 +206,14 @@ export default function AffichePage() {
     }
 
     // Dessiner le texte "J'y serai"
-    ctx.save();
-    ctx.font = (canvas.width * 0.1) + 'px "Arizonia", cursive';
-    ctx.fillStyle = "#F13D06";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "top";
-    const textY = centerY + radius + (canvas.height * 0.05);
-    ctx.fillText("J'y serai", centerX, textY);
-    ctx.restore();
+    // ctx.save();
+    // ctx.font = (canvas.width * 0.1) + 'px "Arizonia", cursive';
+    // ctx.fillStyle = "#F13D06";
+    // ctx.textAlign = "center";
+    // ctx.textBaseline = "top";
+    // const textY = centerY + radius + (canvas.height * 0.05);
+    // ctx.fillText("J'y serai", centerX, textY);
+    // ctx.restore();
 
     setLoading(false);
   };
@@ -352,13 +352,13 @@ export default function AffichePage() {
   };
 
   return (
-    <div style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", background: "#0D7702", minHeight: "100vh", padding: "20px" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto", background: "white", borderRadius: "20px", boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)", padding: "30px" }}>
+    <div style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", background: "#0D7702", minHeight: "100vh", padding: "clamp(10px, 2vw, 20px)", boxSizing: "border-box" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", background: "white", borderRadius: "20px", boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)", padding: "clamp(15px, 3vw, 30px)", boxSizing: "border-box", width: "100%" }}>
         <h1 style={{ textAlign: "center", color: "#333", marginBottom: "10px", fontSize: "2em" }}>
           Dialogue National Intergénérationnel
         </h1>
         <div style={{ display: "inline-block", background: "#F13D06", color: "white", padding: "8px 20px", borderRadius: "25px", fontWeight: "bold", marginBottom: "30px", textAlign: "center", width: "100%" }}>
-          Campagne "J'y serai" - La Grande Rencontre - DNI - Dialogue National Intergénérationnel 2025
+          Campagne "J'y serai" - La Rencontre National du Dialogue Intergenerationnel - DNI 2025
         </div>
         <p style={{ textAlign: "center", color: "#666", marginBottom: "30px", fontSize: "1.1em" }}>
           Créez votre affiche personnalisée en quelques clics !
@@ -373,8 +373,8 @@ export default function AffichePage() {
           </ol>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "30px", marginBottom: "30px", maxWidth: "500px", marginLeft: "auto", marginRight: "auto" }}>
-          <div style={{ background: "#f8f9fa", padding: "25px", borderRadius: "15px", border: "2px dashed #0D7702" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "clamp(20px, 4vw, 30px)", marginBottom: "clamp(20px, 4vw, 30px)", maxWidth: "500px", marginLeft: "auto", marginRight: "auto", width: "100%", boxSizing: "border-box", padding: "0 clamp(5px, 2vw, 0px)" }}>
+          <div style={{ background: "#f8f9fa", padding: "clamp(15px, 3vw, 25px)", borderRadius: "15px", border: "2px dashed #0D7702", boxSizing: "border-box", width: "100%", maxWidth: "100%" }}>
             <h2 style={{ color: "#333", marginBottom: "20px", fontSize: "1.5em" }}>📸 Votre Photo</h2>
             <div style={{ position: "relative", marginBottom: "20px" }}>
               <label
@@ -443,22 +443,24 @@ export default function AffichePage() {
           </div>
 
           {showAdjustSection && (
-            <div style={{ background: "#f8f9fa", padding: "25px", borderRadius: "15px", border: "2px dashed #0D7702", marginTop: "20px" }}>
-              <h3 style={{ color: "#333", marginBottom: "15px", fontSize: "1.3em" }}>🎯 Ajustement de la photo</h3>
-              <p style={{ textAlign: "center", color: "#666", marginBottom: "15px" }}>
-                Déplacez la photo avec la souris et ajustez le zoom pour un meilleur cadrage
+            <div style={{ background: "#f8f9fa", padding: "clamp(10px, 2vw, 15px)", borderRadius: "15px", border: "2px dashed #0D7702", marginTop: "15px", boxSizing: "border-box", maxWidth: "100%", overflow: "hidden", width: "100%" }}>
+              <h3 style={{ color: "#333", marginBottom: "10px", fontSize: "clamp(0.95em, 3.5vw, 1.3em)", padding: "0 5px" }}>🎯 Ajustement de la photo</h3>
+              <p style={{ textAlign: "center", color: "#666", marginBottom: "10px", fontSize: "clamp(0.8em, 2.5vw, 1em)", padding: "0 8px" }}>
+                Déplacez la photo avec la souris (ou le doigt) et ajustez le zoom pour un meilleur cadrage
               </p>
               <div
                 style={{
                   position: "relative",
-                  width: "300px",
-                  height: "300px",
-                  margin: "20px auto",
+                  width: "min(260px, 75vw)",
+                  height: "min(260px, 75vw)",
+                  margin: "12px auto",
                   borderRadius: "50%",
                   overflow: "hidden",
                   border: "3px solid #0D7702",
                   cursor: isAdjusting ? "grabbing" : "move",
                   background: "#fff",
+                  touchAction: "none",
+                  maxWidth: "100%",
                 }}
                 onMouseDown={handleMouseDown}
                 onWheel={handleWheel}
@@ -468,8 +470,8 @@ export default function AffichePage() {
               >
                 <canvas ref={adjustPreviewCanvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
               </div>
-              <div style={{ display: "flex", gap: "10px", justifyContent: "center", alignItems: "center", marginTop: "20px", flexWrap: "wrap" }}>
-                <label style={{ fontWeight: "bold", color: "#333" }}>Zoom:</label>
+              <div style={{ display: "flex", gap: "6px", justifyContent: "center", alignItems: "center", marginTop: "12px", flexWrap: "wrap", padding: "0 8px", width: "100%", boxSizing: "border-box" }}>
+                <label style={{ fontWeight: "bold", color: "#333", fontSize: "clamp(0.8em, 2.5vw, 1em)", flexShrink: 0 }}>Zoom:</label>
                 <input
                   type="range"
                   id="zoomSlider"
@@ -478,43 +480,43 @@ export default function AffichePage() {
                   step="0.1"
                   value={photoAdjustment.scale}
                   onChange={handleZoomChange}
-                  style={{ width: "200px", margin: "0 10px" }}
+                  style={{ width: "min(150px, 40vw)", margin: "0 6px", minWidth: "100px", maxWidth: "180px", flex: "1 1 auto" }}
                 />
-                <span id="zoomValue">{Math.round(photoAdjustment.scale * 100)}%</span>
+                <span id="zoomValue" style={{ fontSize: "clamp(0.8em, 2.5vw, 1em)", minWidth: "35px", textAlign: "center", flexShrink: 0 }}>{Math.round(photoAdjustment.scale * 100)}%</span>
               </div>
-              <div style={{ display: "flex", gap: "10px", justifyContent: "center", alignItems: "center", marginTop: "15px", flexWrap: "wrap" }}>
-                <label style={{ width: "100%", textAlign: "center", marginBottom: "10px" }}>Déplacer la photo:</label>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "5px", maxWidth: "200px", margin: "0 auto" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", justifyContent: "center", alignItems: "center", marginTop: "10px", flexWrap: "wrap", width: "100%", boxSizing: "border-box" }}>
+                <label style={{ width: "100%", textAlign: "center", marginBottom: "6px", fontSize: "clamp(0.8em, 2.5vw, 1em)", padding: "0 5px" }}>Déplacer la photo:</label>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "5px", maxWidth: "min(200px, 60vw)", margin: "0 auto", width: "100%", padding: "0 8px", boxSizing: "border-box" }}>
                   <div></div>
                   <button
                     onClick={() => movePhoto(0, -5)}
-                    style={{ padding: "10px", background: "#F13D06", color: "white", border: "none", borderRadius: "10px", cursor: "pointer" }}
+                    style={{ padding: "clamp(8px, 2vw, 10px)", background: "#F13D06", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "clamp(1em, 3vw, 1.3em)", minHeight: "38px", touchAction: "manipulation", width: "100%", boxSizing: "border-box" }}
                   >
                     ↑
                   </button>
                   <div></div>
                   <button
                     onClick={() => movePhoto(-5, 0)}
-                    style={{ padding: "10px", background: "#F13D06", color: "white", border: "none", borderRadius: "10px", cursor: "pointer" }}
+                    style={{ padding: "clamp(8px, 2vw, 10px)", background: "#F13D06", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "clamp(1em, 3vw, 1.3em)", minHeight: "38px", touchAction: "manipulation", width: "100%", boxSizing: "border-box" }}
                   >
                     ←
                   </button>
                   <button
                     onClick={resetAdjustment}
-                    style={{ padding: "10px", background: "#F13D06", color: "white", border: "none", borderRadius: "10px", cursor: "pointer" }}
+                    style={{ padding: "clamp(8px, 2vw, 10px)", background: "#F13D06", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "clamp(1em, 3vw, 1.3em)", minHeight: "38px", touchAction: "manipulation", width: "100%", boxSizing: "border-box" }}
                   >
                     ↺
                   </button>
                   <button
                     onClick={() => movePhoto(5, 0)}
-                    style={{ padding: "10px", background: "#F13D06", color: "white", border: "none", borderRadius: "10px", cursor: "pointer" }}
+                    style={{ padding: "clamp(8px, 2vw, 10px)", background: "#F13D06", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "clamp(1em, 3vw, 1.3em)", minHeight: "38px", touchAction: "manipulation", width: "100%", boxSizing: "border-box" }}
                   >
                     →
                   </button>
                   <div></div>
                   <button
                     onClick={() => movePhoto(0, 5)}
-                    style={{ padding: "10px", background: "#F13D06", color: "white", border: "none", borderRadius: "10px", cursor: "pointer" }}
+                    style={{ padding: "clamp(8px, 2vw, 10px)", background: "#F13D06", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "clamp(1em, 3vw, 1.3em)", minHeight: "38px", touchAction: "manipulation", width: "100%", boxSizing: "border-box" }}
                   >
                     ↓
                   </button>

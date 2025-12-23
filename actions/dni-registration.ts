@@ -101,10 +101,10 @@ export async function registerDniParticipant(
         participant: updatedParticipant,
         ticketUrl: `/dni/ticket/${updatedParticipant.id}`,
       },
-      "Inscription réussie ! Votre ticket a été généré."
+      "Réservation réussie ! Votre ticket a été généré."
     );
   } catch (error: any) {
-    console.error("Erreur lors de l'inscription DNI:", error);
+    console.error("Erreur lors de la réservation DNI:", error);
     
     // Gestion des erreurs spécifiques
     if (error?.code === "P2002") {
@@ -120,7 +120,7 @@ export async function registerDniParticipant(
     // Message d'erreur générique avec plus de détails en développement
     const errorMessage = process.env.NODE_ENV === "development" 
       ? `Erreur: ${error?.message || "Erreur inconnue"}`
-      : "Une erreur est survenue lors de l'inscription. Veuillez réessayer.";
+      : "Une erreur est survenue lors de la réservation. Veuillez réessayer.";
     
     return createErrorResponse(errorMessage);
   }

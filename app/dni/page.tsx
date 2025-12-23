@@ -31,7 +31,7 @@ export default function DniHomePage() {
             Dialogue National Intergénérationnel
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-4">
-            Inscrivez-vous dès maintenant pour participer à cet événement exceptionnel
+           Réservez dès maintenant pour participer à cet événement exceptionnel
           </p>
           <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
             <CheckCircle2 className="h-5 w-5" style={{ color: "#0D7702" }} />
@@ -42,7 +42,7 @@ export default function DniHomePage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Formulaire d'inscription - Colonne principale */}
+          {/* Formulaire de réservation - Colonne principale */}
           <div className="lg:col-span-2">
             <Card className="p-6 md:p-8 shadow-xl">
               <div className="mb-6">
@@ -50,7 +50,7 @@ export default function DniHomePage() {
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full" style={{ backgroundColor: "rgba(13, 119, 2, 0.1)" }}>
                     <Ticket className="h-6 w-6" style={{ color: "#0D7702" }} />
                   </div>
-                  <h2 className="text-2xl font-bold">Inscription</h2>
+                  <h2 className="text-2xl font-bold">Réservation</h2>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400">
                   Remplissez le formulaire ci-dessous pour recevoir votre ticket d'entrée
@@ -126,7 +126,7 @@ export default function DniHomePage() {
               <ol className="space-y-2 text-sm" style={{ color: "#0A5D01" }}>
                 <li className="flex items-start gap-2">
                   <span className="font-bold">1.</span>
-                  <span>Remplissez le formulaire d'inscription</span>
+                  <span>Remplissez le formulaire de réservation</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-bold">2.</span>
@@ -154,7 +154,7 @@ export default function DniHomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-sm text-gray-700 dark:text-gray-300">
               <div>
                 <p className="font-semibold mb-1">✓ Accès garanti</p>
-                <p>Votre place est réservée dès l'inscription</p>
+                <p>Votre place est réservée dès la réservation</p>
               </div>
               <div>
                 <p className="font-semibold mb-1">✓ Ticket numérique</p>

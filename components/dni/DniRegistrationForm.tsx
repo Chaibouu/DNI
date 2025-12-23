@@ -226,7 +226,7 @@ export const DniRegistrationForm = () => {
             <FormError message={error} />
             <FormSuccess message={success} />
             <Button disabled={isPending} type="submit" className="w-full">
-              {isPending ? "Inscription en cours..." : "S'inscrire"}
+              {isPending ? "Réservation en cours..." : "Réserver"}
             </Button>
           </form>
         </Form>

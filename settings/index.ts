@@ -1,6 +1,6 @@
 const appConfig = {
   appName: "Dialogue National Intergénérationnel",
-  websiteTitle: "La Grande Rencontre - DNI - Dialogue National Intergénérationnel",
+  websiteTitle: "La Rencontre National du Dialogue Intergenerationnel - DNI",
   websiteDescription:
     "La plateforme de gestion des participants du Dialogue National Intergénérationnel",
   logoUrl: "/logo.png",

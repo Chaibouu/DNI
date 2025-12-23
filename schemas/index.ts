@@ -108,7 +108,7 @@ export const ResetPasswordSchema = z.object({
     }),
 });
 
-// Schéma pour l'inscription DNI
+// Schéma pour la réservation DNI
 export const DniRegistrationSchema = z.object({
   firstName: z
     .string({

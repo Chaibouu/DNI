@@ -84,7 +84,7 @@ export default function DniLookupPage() {
             className="text-sm hover:underline"
             style={{ color: "#0D7702" }}
           >
-            Pas encore inscrit ? Retour à l'inscription
+            Pas encore réservé ? Retour à la réservation
           </a>
         </div>
       </Card>

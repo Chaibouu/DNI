@@ -54,7 +54,7 @@ export function DniParticipantsList({ participants }: DniParticipantsListProps) 
               <th className="text-left p-3 font-semibold">Email</th>
               <th className="text-left p-3 font-semibold">Statut</th>
               <th className="text-left p-3 font-semibold">Statut</th>
-              <th className="text-left p-3 font-semibold">Date d'inscription</th>
+              <th className="text-left p-3 font-semibold">Date de réservation</th>
               <th className="text-left p-3 font-semibold">Actions</th>
             </tr>
           </thead>

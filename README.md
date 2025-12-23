@@ -119,7 +119,7 @@ website-starter/
 ## 🔐 Système d'authentification
 
 ### Fonctionnalités
-- ✅ Inscription avec vérification email
+- ✅ Réservation avec vérification email
 - ✅ Connexion sécurisée
 - ✅ Refresh tokens automatiques
 - ✅ Gestion des rôles (USER, ADMIN)

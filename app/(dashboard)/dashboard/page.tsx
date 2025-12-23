@@ -39,7 +39,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold" style={{ color: "#F13D06" }}>{stats.today}</div>
             <p className="text-xs text-muted-foreground">
-              Nouvelles inscriptions
+              Nouvelles réservations
             </p>
           </CardContent>
         </Card>
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold" style={{ color: "#0D7702" }}>{stats.thisWeek}</div>
             <p className="text-xs text-muted-foreground">
-              Inscriptions cette semaine
+              Réservations cette semaine
             </p>
           </CardContent>
         </Card>
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold" style={{ color: "#F13D06" }}>{stats.thisMonth}</div>
             <p className="text-xs text-muted-foreground">
-              Inscriptions ce mois
+              Réservations ce mois
             </p>
           </CardContent>
         </Card>
