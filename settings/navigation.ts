@@ -16,42 +16,18 @@ export const adminNavigation: NavigationItem[] = [
     title: "Dashboard",
     icon: "material-symbols:dashboard",
     path: "/dashboard",
-    allowedRoles: ["USER"],
+    allowedRoles: ["USER","ADMIN"],
   },
   {
-    title: "Blogs",
-    icon: "material-symbols:home-work",
-    path: "/blogs",
-    allowedRoles: ["USER"],
-  },
-  {
-    title: "Test",
-    icon: "material-symbols:dashboard",
-    path: "/test",
-    allowedRoles: ["ADMIN", "USER"],
+    title: "Participants",
+    icon: "material-symbols:groups",
+    path: "/participants",
+    allowedRoles: ["USER","ADMIN"],
   },
   {
     title: "Paramètres",
     icon: "material-symbols:settings",
     path: "/dashboard/settings",
-    allowedRoles: ["USER"],
-  },
-  {
-    title: "Pages",
-    icon: "eos-icons:admin",
-    path: "#",
-    children: [
-      {
-        title: "Client",
-        path: "/dashboard/client",
-        allowedRoles: ["USER"],
-      },
-      {
-        title: "Server",
-        path: "/dashboard/server",
-        allowedRoles: ["USER"],
-      },
-    ],
-    allowedRoles: ["USER"],
+    allowedRoles: ["ADMIN"],
   },
 ];

@@ -5,10 +5,10 @@ import "./data-tables-css.css";
 import "./satoshi.css";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/context/SessionContext";
-import { SidebarClear } from "@/components/Sidebarr/SidebarClear/SidebarClear";
+import Sidebar from "@/components/Sidebarr/Sidebar";
 import HeaderClear from "@/components/Sidebarr/SidebarClear/Header";
-import { Sidebar2 } from "@/components/Sidebar2/Sidebar2";
 import { Loader } from "@/components/common/Loader";
+import { adminNavigation } from "@/settings/navigation";
 
 export default function DashboardLayout({
   children,
@@ -43,8 +43,7 @@ export default function DashboardLayout({
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        {/* <Sidebar navigation={adminNavigation} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
-        {/* <SidebarClear/> */}
+        <Sidebar navigation={adminNavigation} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}

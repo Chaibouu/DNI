@@ -63,35 +63,38 @@ export function DniParticipantsList({ participants }: DniParticipantsListProps) 
   return (
     <Card className="p-6">
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full border-collapse">
           <thead>
-            <tr className="border-b">
-              <th className="text-left p-3 font-semibold">ID Unique</th>
-              <th className="text-left p-3 font-semibold">Nom complet</th>
-              <th className="text-left p-3 font-semibold">Email</th>
-              <th className="text-left p-3 font-semibold">Statut</th>
-              <th className="text-left p-3 font-semibold">Statut</th>
-              <th className="text-left p-3 font-semibold">Date de réservation</th>
-              <th className="text-left p-3 font-semibold">Actions</th>
+            <tr className="border-b-2" style={{ borderColor: "#0D7702" }}>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>ID Unique</th>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>Nom complet</th>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>Email</th>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>Téléphone</th>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>Catégorie</th>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>Statut</th>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>Date de réservation</th>
+              <th className="text-left p-3 font-semibold text-sm whitespace-nowrap" style={{ color: "#0D7702" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {participants.map((participant) => (
-              <tr key={participant.id} className="border-b hover:bg-gray-50 dark:hover:bg-gray-800">
-                <td className="p-3">
-                  <code className="text-sm font-mono">{participant.uniqueId}</code>
+              <tr key={participant.id} className="border-b hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                <td className="p-3 whitespace-nowrap">
+                  <code className="text-sm font-mono" style={{ color: "#0D7702" }}>{participant.uniqueId}</code>
                 </td>
-                <td className="p-3">
+                <td className="p-3 whitespace-nowrap text-sm">
                   {participant.firstName} {participant.lastName}
                 </td>
-                <td className="p-3">{participant.email}</td>
-                <td className="p-3">
-                  <Badge variant="outline">
+                <td className="p-3 whitespace-nowrap text-sm">{participant.email || "-"}</td>
+                <td className="p-3 whitespace-nowrap text-sm">{participant.phone}</td>
+                <td className="p-3 whitespace-nowrap">
+                  <Badge variant="outline" className="text-xs">
                     {categoryLabels[participant.category] || participant.category}
                   </Badge>
                 </td>
-                <td className="p-3">
+                <td className="p-3 whitespace-nowrap">
                   <Badge 
+                    className="text-xs whitespace-nowrap"
                     style={{ 
                       backgroundColor: statusColors[participant.status]?.bg || "rgba(0, 0, 0, 0.1)",
                       color: statusColors[participant.status]?.text || "#000"
@@ -100,12 +103,12 @@ export function DniParticipantsList({ participants }: DniParticipantsListProps) 
                     {statusLabels[participant.status] || participant.status}
                   </Badge>
                 </td>
-                <td className="p-3 text-sm text-gray-600 dark:text-gray-400">
+                <td className="p-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                   {new Date(participant.createdAt).toLocaleDateString("fr-FR")}
                 </td>
-                <td className="p-3">
+                <td className="p-3 whitespace-nowrap">
                   <Link href={`/dni/ticket/${participant.id}`}>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" className="whitespace-nowrap">
                       <Eye className="h-4 w-4 mr-1" />
                       Voir
                     </Button>

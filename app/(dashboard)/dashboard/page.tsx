@@ -17,7 +17,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Statistiques principales */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2">
         <Card style={{ borderTop: "3px solid #0D7702" }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Participants</CardTitle>
@@ -43,49 +43,10 @@ export default async function DashboardPage() {
             </p>
           </CardContent>
         </Card>
-
-        <Card style={{ borderTop: "3px solid #0D7702" }}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Cette semaine</CardTitle>
-            <TrendingUp className="h-4 w-4" style={{ color: "#0D7702" }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: "#0D7702" }}>{stats.thisWeek}</div>
-            <p className="text-xs text-muted-foreground">
-              Réservations cette semaine
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card style={{ borderTop: "3px solid #F13D06" }}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ce mois</CardTitle>
-            <Calendar className="h-4 w-4" style={{ color: "#F13D06" }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: "#F13D06" }}>{stats.thisMonth}</div>
-            <p className="text-xs text-muted-foreground">
-              Réservations ce mois
-            </p>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Statistiques par statut */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">En attente</CardTitle>
-            <Ticket className="h-4 w-4" style={{ color: "#F13D06" }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: "#F13D06" }}>{stats.byStatus.PENDING}</div>
-            <p className="text-xs text-muted-foreground">
-              Statut: PENDING
-            </p>
-          </CardContent>
-        </Card>
-
+      <div className="grid gap-4 md:grid-cols-1">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Confirmés</CardTitle>
@@ -98,32 +59,6 @@ export default async function DashboardPage() {
             </p>
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Annulés</CardTitle>
-            <UserX className="h-4 w-4" style={{ color: "#F13D06" }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: "#F13D06" }}>{stats.byStatus.CANCELLED}</div>
-            <p className="text-xs text-muted-foreground">
-              Statut: CANCELLED
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Présents</CardTitle>
-            <UserCheck className="h-4 w-4" style={{ color: "#0D7702" }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.byStatus.CHECKED_IN}</div>
-            <p className="text-xs text-muted-foreground">
-              Statut: CHECKED_IN
-            </p>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Statistiques par catégorie */}
@@ -133,27 +68,110 @@ export default async function DashboardPage() {
             <CardTitle className="text-sm font-medium" style={{ color: "#0D7702" }}>Par Catégorie</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-[500px] overflow-y-auto">
+              {/* Jeunes / Formation */}
               <div className="flex justify-between items-center">
-                <span className="text-sm">Professionnel</span>
-                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.PROFESSIONNEL}</span>
+                <span className="text-sm">Élève</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.ELEVE}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm">Étudiant</span>
                 <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.ETUDIANT}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm">Au chômage</span>
-                <span className="font-bold" style={{ color: "#F13D06" }}>{stats.byCategory.CHOMAGE}</span>
+                <span className="text-sm">Stagiaire</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.STAGIAIRE}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm">Retraité</span>
-                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.RETRAITE}</span>
+                <span className="text-sm">Apprenti</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.APPRENTI}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Jeune professionnel</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.JEUNE_PROFESSIONNEL}</span>
+              </div>
+
+              {/* Actifs */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Professionnel</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.PROFESSIONNEL}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Fonctionnaire</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.FONCTIONNAIRE}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm">Entrepreneur</span>
                 <span className="font-bold" style={{ color: "#F13D06" }}>{stats.byCategory.ENTREPRENEUR}</span>
               </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Travailleur indépendant</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.INDEPENDANT}</span>
+              </div>
+
+              {/* Emploi */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Sans emploi</span>
+                <span className="font-bold" style={{ color: "#F13D06" }}>{stats.byCategory.SANS_EMPLOI}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Chômage</span>
+                <span className="font-bold" style={{ color: "#F13D06" }}>{stats.byCategory.CHOMAGE}</span>
+              </div>
+
+              {/* Seniors */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Retraité</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.RETRAITE}</span>
+              </div>
+
+              {/* Société civile & communauté */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Acteur de la société civile</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.ACTEUR_SOCIETE_CIVILE}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Leader communautaire</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.LEADER_COMMUNAUTAIRE}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Leader traditionnel</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.LEADER_TRADITIONNEL}</span>
+              </div>
+
+              {/* Organisations & institutions */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Organisation</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.ORGANISATION}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Institution</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.INSTITUTION}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">ONG</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.ONG}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Association</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.ASSOCIATION}</span>
+              </div>
+
+              {/* Médias & diaspora */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Média</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.MEDIA}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Journaliste</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.JOURNALISTE}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm">Diaspora</span>
+                <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.DIASPORA}</span>
+              </div>
+
+              {/* Autre */}
               <div className="flex justify-between items-center">
                 <span className="text-sm">Autre</span>
                 <span className="font-bold" style={{ color: "#0D7702" }}>{stats.byCategory.AUTRE}</span>
