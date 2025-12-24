@@ -28,6 +28,6 @@ export const adminNavigation: NavigationItem[] = [
     title: "Paramètres",
     icon: "material-symbols:settings",
     path: "/dashboard/settings",
-    allowedRoles: ["ADMIN"],
+    allowedRoles: ["ADMIN","USER"],
   },
 ];
