@@ -11,11 +11,28 @@ export interface DniStats {
     CHECKED_IN: number;
   };
   byCategory: {
-    PROFESSIONNEL: number;
+    ELEVE: number;
     ETUDIANT: number;
+    STAGIAIRE: number;
+    APPRENTI: number;
+    JEUNE_PROFESSIONNEL: number;
+    PROFESSIONNEL: number;
+    FONCTIONNAIRE: number;
+    ENTREPRENEUR: number;
+    INDEPENDANT: number;
+    SANS_EMPLOI: number;
     CHOMAGE: number;
     RETRAITE: number;
-    ENTREPRENEUR: number;
+    ACTEUR_SOCIETE_CIVILE: number;
+    LEADER_COMMUNAUTAIRE: number;
+    LEADER_TRADITIONNEL: number;
+    ONG: number;
+    ASSOCIATION: number;
+    ORGANISATION: number;
+    INSTITUTION: number;
+    MEDIA: number;
+    JOURNALISTE: number;
+    DIASPORA: number;
     AUTRE: number;
   };
   byGender: {
@@ -46,11 +63,28 @@ export async function getDniStats(): Promise<DniStats> {
 
     // Par catégorie
     const byCategory = {
-      PROFESSIONNEL: await db.dniParticipant.count({ where: { category: "PROFESSIONNEL" } }),
+      ELEVE: await db.dniParticipant.count({ where: { category: "ELEVE" } }),
       ETUDIANT: await db.dniParticipant.count({ where: { category: "ETUDIANT" } }),
+      STAGIAIRE: await db.dniParticipant.count({ where: { category: "STAGIAIRE" } }),
+      APPRENTI: await db.dniParticipant.count({ where: { category: "APPRENTI" } }),
+      JEUNE_PROFESSIONNEL: await db.dniParticipant.count({ where: { category: "JEUNE_PROFESSIONNEL" } }),
+      PROFESSIONNEL: await db.dniParticipant.count({ where: { category: "PROFESSIONNEL" } }),
+      FONCTIONNAIRE: await db.dniParticipant.count({ where: { category: "FONCTIONNAIRE" } }),
+      ENTREPRENEUR: await db.dniParticipant.count({ where: { category: "ENTREPRENEUR" } }),
+      INDEPENDANT: await db.dniParticipant.count({ where: { category: "INDEPENDANT" } }),
+      SANS_EMPLOI: await db.dniParticipant.count({ where: { category: "SANS_EMPLOI" } }),
       CHOMAGE: await db.dniParticipant.count({ where: { category: "CHOMAGE" } }),
       RETRAITE: await db.dniParticipant.count({ where: { category: "RETRAITE" } }),
-      ENTREPRENEUR: await db.dniParticipant.count({ where: { category: "ENTREPRENEUR" } }),
+      ACTEUR_SOCIETE_CIVILE: await db.dniParticipant.count({ where: { category: "ACTEUR_SOCIETE_CIVILE" } }),
+      LEADER_COMMUNAUTAIRE: await db.dniParticipant.count({ where: { category: "LEADER_COMMUNAUTAIRE" } }),
+      LEADER_TRADITIONNEL: await db.dniParticipant.count({ where: { category: "LEADER_TRADITIONNEL" } }),
+      ONG: await db.dniParticipant.count({ where: { category: "ONG" } }),
+      ASSOCIATION: await db.dniParticipant.count({ where: { category: "ASSOCIATION" } }),
+      ORGANISATION: await db.dniParticipant.count({ where: { category: "ORGANISATION" } }),
+      INSTITUTION: await db.dniParticipant.count({ where: { category: "INSTITUTION" } }),
+      MEDIA: await db.dniParticipant.count({ where: { category: "MEDIA" } }),
+      JOURNALISTE: await db.dniParticipant.count({ where: { category: "JOURNALISTE" } }),
+      DIASPORA: await db.dniParticipant.count({ where: { category: "DIASPORA" } }),
       AUTRE: await db.dniParticipant.count({ where: { category: "AUTRE" } }),
     };
 

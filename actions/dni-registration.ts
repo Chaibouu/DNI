@@ -20,7 +20,8 @@ export async function registerDniParticipant(
       email: formData.get("email") || undefined,
       phone: formData.get("phone"),
       gender: formData.get("gender") || undefined,
-      category: formData.get("category") || "PROFESSIONNEL",
+      organisation: formData.get("organisation") || undefined,
+      category: formData.get("category") || "ETUDIANT",
     };
 
     // Validation avec Zod
@@ -73,6 +74,7 @@ export async function registerDniParticipant(
         email: validatedData.email,
         phone: validatedData.phone,
         gender: validatedData.gender || null,
+        organisation: validatedData.organisation || null,
         category: validatedData.category,
         status: "PENDING",
         qrCode: null, // Sera mis à jour après génération

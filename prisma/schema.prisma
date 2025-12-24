@@ -201,11 +201,28 @@ model BlogPost {
 
 // Modèle pour les participants du Dialogue National Intergénérationnel (DNI)
 enum ParticipantCategory {
-    PROFESSIONNEL
+    ELEVE
     ETUDIANT
+    STAGIAIRE
+    APPRENTI
+    JEUNE_PROFESSIONNEL
+    PROFESSIONNEL
+    FONCTIONNAIRE
+    ENTREPRENEUR
+    INDEPENDANT
+    SANS_EMPLOI
     CHOMAGE
     RETRAITE
-    ENTREPRENEUR
+    ACTEUR_SOCIETE_CIVILE
+    LEADER_COMMUNAUTAIRE
+    LEADER_TRADITIONNEL
+    ONG
+    ASSOCIATION
+    ORGANISATION
+    INSTITUTION
+    MEDIA
+    JOURNALISTE
+    DIASPORA
     AUTRE
 }
 
@@ -230,7 +247,8 @@ model DniParticipant {
     email           String?           @unique // Email optionnel
     phone           String            // Téléphone obligatoire
     gender          Gender?           // Sexe du participant
-    category        ParticipantCategory @default(PROFESSIONNEL)
+    organisation    String?           // Organisation optionnelle
+    category        ParticipantCategory @default(ETUDIANT)
     status          ParticipantStatus @default(PENDING)
     qrCode          String?           @unique // QR code en base64 ou string
     qrCodeData      String?           // Données encodées dans le QR code

@@ -42,7 +42,8 @@ export const DniRegistrationForm = () => {
       email: "",
       phone: "",
       gender: undefined,
-      category: "PROFESSIONNEL",
+      organisation: "",
+      category: "ETUDIANT",
     },
   });
 
@@ -59,6 +60,9 @@ export const DniRegistrationForm = () => {
     formData.append("phone", values.phone);
     if (values.gender) {
       formData.append("gender", values.gender);
+    }
+    if (values.organisation && values.organisation.trim() !== "") {
+      formData.append("organisation", values.organisation);
     }
     formData.append("category", values.category);
 
@@ -193,6 +197,23 @@ export const DniRegistrationForm = () => {
               />
               <FormField
                 control={form.control}
+                name="organisation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Organisation</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPending}
+                        placeholder="Nom de votre organisation"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="category"
                 render={({ field }) => (
                   <FormItem>
@@ -210,12 +231,44 @@ export const DniRegistrationForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="PROFESSIONNEL">Professionnel</SelectItem>
+                        {/* Jeunes / Formation */}
+                        <SelectItem value="ELEVE">Élève</SelectItem>
                         <SelectItem value="ETUDIANT">Étudiant</SelectItem>
-                        <SelectItem value="CHOMAGE">Au chômage</SelectItem>
-                        <SelectItem value="RETRAITE">Retraité</SelectItem>
+                        <SelectItem value="STAGIAIRE">Stagiaire</SelectItem>
+                        <SelectItem value="APPRENTI">Apprenti</SelectItem>
+                        <SelectItem value="JEUNE_PROFESSIONNEL">Jeune professionnel</SelectItem>
+
+                        {/* Actifs */}
+                        <SelectItem value="PROFESSIONNEL">Professionnel</SelectItem>
+                        <SelectItem value="FONCTIONNAIRE">Fonctionnaire</SelectItem>
                         <SelectItem value="ENTREPRENEUR">Entrepreneur</SelectItem>
-                        <SelectItem value="AUTRE">Autre</SelectItem>
+                        <SelectItem value="INDEPENDANT">Travailleur indépendant</SelectItem>
+
+                        {/* Emploi */}
+                        <SelectItem value="SANS_EMPLOI">Sans emploi</SelectItem>
+                        <SelectItem value="CHOMAGE">Chômage</SelectItem>
+
+                        {/* Seniors */}
+                        <SelectItem value="RETRAITE">Retraité</SelectItem>
+
+                        {/* Société civile & communauté */}
+                        <SelectItem value="ACTEUR_SOCIETE_CIVILE">Acteur de la société civile</SelectItem>
+                        <SelectItem value="LEADER_COMMUNAUTAIRE">Leader communautaire</SelectItem>
+                        <SelectItem value="LEADER_TRADITIONNEL">Leader traditionnel</SelectItem>
+
+                        {/* Organisations & institutions */}
+                        <SelectItem value="ORGANISATION">Organisation</SelectItem>
+                        <SelectItem value="INSTITUTION">Institution</SelectItem>
+                        <SelectItem value="ONG">ONG</SelectItem>
+                        <SelectItem value="ASSOCIATION">Association</SelectItem>
+
+                        {/* Médias & diaspora */}
+                        <SelectItem value="MEDIA">Média</SelectItem>
+                        <SelectItem value="JOURNALISTE">Journaliste</SelectItem>
+                        <SelectItem value="DIASPORA">Diaspora</SelectItem>
+
+                        {/* Autre */}
+                        <SelectItem value="AUTRE">Autre (à préciser)</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

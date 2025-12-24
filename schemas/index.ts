@@ -142,7 +142,34 @@ export const DniRegistrationSchema = z.object({
   gender: z
     .enum(["MASCULIN", "FEMININ", "AUTRE"])
     .optional(),
-  category: z.enum(["PROFESSIONNEL", "ETUDIANT", "CHOMAGE", "RETRAITE", "ENTREPRENEUR", "AUTRE"], {
+  organisation: z
+    .string()
+    .optional(),
+  category: z.enum([
+    "ELEVE",
+    "ETUDIANT",
+    "STAGIAIRE",
+    "APPRENTI",
+    "JEUNE_PROFESSIONNEL",
+    "PROFESSIONNEL",
+    "FONCTIONNAIRE",
+    "ENTREPRENEUR",
+    "INDEPENDANT",
+    "SANS_EMPLOI",
+    "CHOMAGE",
+    "RETRAITE",
+    "ACTEUR_SOCIETE_CIVILE",
+    "LEADER_COMMUNAUTAIRE",
+    "LEADER_TRADITIONNEL",
+    "ONG",
+    "ASSOCIATION",
+    "ORGANISATION",
+    "INSTITUTION",
+    "MEDIA",
+    "JOURNALISTE",
+    "DIASPORA",
+    "AUTRE"
+  ], {
     message: "Le statut est requis",
   }),
 });

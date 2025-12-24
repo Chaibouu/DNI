@@ -12,12 +12,29 @@ interface DniParticipantsListProps {
 }
 
 const categoryLabels: Record<string, string> = {
-  PROFESSIONNEL: "Professionnel",
+  ELEVE: "Élève",
   ETUDIANT: "Étudiant",
-  CHOMAGE: "Au chômage",
-  RETRAITE: "Retraité",
+  STAGIAIRE: "Stagiaire",
+  APPRENTI: "Apprenti",
+  JEUNE_PROFESSIONNEL: "Jeune professionnel",
+  PROFESSIONNEL: "Professionnel",
+  FONCTIONNAIRE: "Fonctionnaire",
   ENTREPRENEUR: "Entrepreneur",
-  AUTRE: "Autre",
+  INDEPENDANT: "Travailleur indépendant",
+  SANS_EMPLOI: "Sans emploi",
+  CHOMAGE: "Chômage",
+  RETRAITE: "Retraité",
+  ACTEUR_SOCIETE_CIVILE: "Acteur de la société civile",
+  LEADER_COMMUNAUTAIRE: "Leader communautaire",
+  LEADER_TRADITIONNEL: "Leader traditionnel",
+  ONG: "ONG",
+  ASSOCIATION: "Association",
+  ORGANISATION: "Organisation",
+  INSTITUTION: "Institution",
+  MEDIA: "Média",
+  JOURNALISTE: "Journaliste",
+  DIASPORA: "Diaspora",
+  AUTRE: "Autre (à préciser)",
 };
 
 const statusLabels: Record<string, string> = {
