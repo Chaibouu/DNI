@@ -6,11 +6,12 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ParticipantsPageProps {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }
 
 export default async function ParticipantsPage({ searchParams }: ParticipantsPageProps) {
-  const page = parseInt(searchParams.page || "1", 10);
+  const resolvedSearchParams = await searchParams;
+  const page = parseInt(resolvedSearchParams.page || "1", 10);
   const { participants, pagination } = await getAllDniParticipants(page, 50);
 
   return (
